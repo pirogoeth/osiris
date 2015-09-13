@@ -73,7 +73,7 @@ class MongoDBStore(TokenStore):
         """The MongoDB connection, cached for this call"""
         try:
             if not self.enable_cluster:
-                db_conn = MongoClient(self.host, self.port, slave_okay=False)
+                db_conn = MongoClient(self.host, self.port)
             else:
                 db_conn = MongoReplicaSetClient(self.hosts,
                                                 replicaSet=self.replica_set,

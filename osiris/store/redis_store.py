@@ -59,7 +59,7 @@ class RedisStore(TokenStore):
                             found = False
                             break
                     if found:
-                        return r.hgetall(token)
+                        return r.hgetall(key)
                     else:
                         continue
                             
