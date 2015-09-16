@@ -72,7 +72,7 @@ def default_setup(config):
         config.ldap_set_groups_query(base_dn=ldapconfig.get('ldap', 'groupbasedn'),
                                      filter_tmpl=ldapconfig.get('ldap', 'groupfilter'),
                                      scope=getattr(ldap, ldapconfig.get('ldap', 'groupscope')),
-                                     cache_period=ldapconfig.get('ldap', 'groupcache'),
+                                     cache_period=float(ldapconfig.get('ldap', 'groupcache')),
                                      )
 
     if not ldap_enabled:

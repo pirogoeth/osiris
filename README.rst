@@ -193,6 +193,7 @@ pyramid_ldap is the defacto standard plugin when dealing with ldap in pyramid.
 This is the configuration needed in the .ini to enable LDAP::
 
     osiris.ldap_enabled = true
+    osiris.ldap_scope_as_group = true
     osiris.ldap.server = ldaps://your.ldap.uri
     osiris.ldap.userbind = cn=user.to.bind,ou=users,dc=my,dc=domain
     osiris.ldap.password = secret
