@@ -6,6 +6,19 @@ from osiris.errorhandling import OAuth2ErrorHandler
 from osiris.authorization import password_authorization
 
 
+@view_config(name='_health',
+             renderer='json',
+             request_method='GET',
+             http_cache=0)
+def health_endpoint(request):
+    """
+    The health endpoint returns a simple JSON dictionary with the current
+    service status, in this case, just a simple {"status": "okay"}.
+    """
+
+    return dict(status="okay")
+
+
 @view_config(name='token',
              renderer='json',
              request_method='POST',
