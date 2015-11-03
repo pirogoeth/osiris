@@ -92,10 +92,15 @@ class OAuth2ErrorHandler(object):
         return JSONHTTPNotImplemented(error_response)
 
     @staticmethod
-    def error_invalid_scope():
+    def error_invalid_scope(scope_name=None):
         """
             The requested scope is invalid, unknown, malformed, or exceeds the
             scope granted by the resource owner.
         """
+
+        msg = "An unsupported scope was requested"
+        if scope_name:
+            msg = msg + ": %s" % (scope_name)
+
         return dict(error='invalid_scope',
-                    error_description="")
+                    error_description=msg)

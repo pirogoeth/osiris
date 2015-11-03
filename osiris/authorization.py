@@ -15,13 +15,16 @@ def password_authorization(request, username, password, scope, expires_in):
         from osiris import get_ldap_connector
         connector = get_ldap_connector(request)
         identity = connector.authenticate(username, password)
+        scopes = scope.split(' ')
         if ldap_scope_as_group and scope:
             user_groups = connector.user_groups(username)
             user_groups = [group[0] for group in user_groups]
             user_groups = [group.split(",")[0].split("=")[1]
                            for group in user_groups]
-            if scope not in user_groups:
-                return OAuth2ErrorHandler.error_invalid_scope()
+
+            for req_scope in scopes:
+                if req_scope not in user_groups:
+                    return OAuth2ErrorHandler.error_invalid_scope(req_scope)
 
     else:
         policy = request.registry.queryUtility(IAuthenticationPolicy)
