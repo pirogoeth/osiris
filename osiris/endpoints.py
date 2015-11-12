@@ -5,6 +5,8 @@ from osiris.appconst import ACCESS_TOKEN_LENGTH
 from osiris.errorhandling import OAuth2ErrorHandler
 from osiris.authorization import password_authorization
 
+import urllib
+
 
 @view_config(name='_health',
              renderer='json',
@@ -47,8 +49,8 @@ def token_endpoint(request):
     # Client Credentials Grant
     elif grant_type == 'password':
         scope = request.params.get('scope', None)  # Optional
-        username = request.params.get('username', None)
-        password = request.params.get('password', None)
+        username = urllib.unquote(request.params.get('username', None))
+        password = urllib.unquote(request.params.get('password', None))
         if username is None:
             return OAuth2ErrorHandler.error_invalid_request('Required parameter username not found in the request')
         elif password is None:
@@ -73,8 +75,10 @@ def check_token_endpoint(request):
     """
 
     access_token = request.params.get('access_token')
-    username = request.params.get('username')
+    username = urllib.unquote(request.params.get('username'))
     scope = request.params.get('scope', None)
+    if scope is not None:
+        scope = urllib.unquote_plus(scope)
 
     if username is None:
         return OAuth2ErrorHandler.error_invalid_request('Required parameter username not found in the request')
